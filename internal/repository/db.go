@@ -243,7 +243,7 @@ func MockUp() {
 		SetType("Smart account").
 		SetCurrency("").
 		SetAccountNumber("568-2-817-40-9").
-		SetIssuer("").
+		SetIssuer("TestLab").
 		AddAccountBalanceIDs(accountBalanceTester1.ID).
 		AddAccountDetailIDs(accountDetailTester1.ID).
 		SaveX(ctx)

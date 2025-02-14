@@ -6,7 +6,12 @@ import (
 )
 
 type Handler interface {
-	TestPing(c echo.Context) error
+	GetAccountList(c echo.Context) error 
+	GetAccountMain(c echo.Context) error 
+	GetDebitCardExample(c echo.Context) error
+	GetTransaction(c echo.Context) error
+	GetUserGreeting(c echo.Context) error 
+	GetUserLoginDetail(c echo.Context) error 
 }
 
 type HandlerImpl struct {
