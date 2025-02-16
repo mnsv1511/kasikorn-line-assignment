@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
 	"github.com/mnsv1511/kasikorn-line-assignment/constant"
 	"github.com/mnsv1511/kasikorn-line-assignment/internal/core/service/domain"
 )
@@ -12,6 +13,7 @@ import (
 func (s *ServiceImpl) GetAccountList(c echo.Context, userId string) (*domain.GetAccountListResponse, error) {
 	intUserId, err := strconv.Atoi(userId)
 	if err != nil {
+		log.Errorf("error req get account list: %s", err)
 		return &domain.GetAccountListResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.INVALID_REQUEST_CODE),
@@ -21,6 +23,7 @@ func (s *ServiceImpl) GetAccountList(c echo.Context, userId string) (*domain.Get
 	}
 	accountListData, err := s.repository.GetAccountsListByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get account list by user id: %s" ,err)
 		return &domain.GetAccountListResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.ACCOUNT_NOT_FOUND_CODE),
@@ -30,6 +33,7 @@ func (s *ServiceImpl) GetAccountList(c echo.Context, userId string) (*domain.Get
 	}
 	accountBalanceListData, err := s.repository.GetAccountBalancesListByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get account balances list by user id: %s" ,err)
 		return &domain.GetAccountListResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.ACCOUNT_NOT_FOUND_CODE),
@@ -39,6 +43,7 @@ func (s *ServiceImpl) GetAccountList(c echo.Context, userId string) (*domain.Get
 	}
 	accountDetailListData, err := s.repository.GetAccountDetailsListByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get account details list by user id: %s" ,err)
 		return &domain.GetAccountListResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.ACCOUNT_NOT_FOUND_CODE),
@@ -48,6 +53,7 @@ func (s *ServiceImpl) GetAccountList(c echo.Context, userId string) (*domain.Get
 	}
 	accountFlagListData, err := s.repository.GetAccountFlagsListByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get account flag list by user id: %s" ,err)
 		return &domain.GetAccountListResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.ACCOUNT_NOT_FOUND_CODE),
@@ -55,7 +61,7 @@ func (s *ServiceImpl) GetAccountList(c echo.Context, userId string) (*domain.Get
 			},
 		}, err
 	}
-	
+
 	accountListMap := make(map[int]domain.Account)
 	for _, account := range accountListData {
 		accountListMap[account.ID] = domain.Account{
@@ -65,7 +71,6 @@ func (s *ServiceImpl) GetAccountList(c echo.Context, userId string) (*domain.Get
 			AccountIssuer: account.Issuer,
 		}
 	}
-
 
 	for _, accountBalance := range accountBalanceListData {
 		if account, ok := accountListMap[accountBalance.AccountID]; ok {

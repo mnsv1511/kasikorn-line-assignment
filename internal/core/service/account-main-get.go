@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
 	"github.com/mnsv1511/kasikorn-line-assignment/constant"
 	"github.com/mnsv1511/kasikorn-line-assignment/internal/core/service/domain"
 )
@@ -12,6 +13,7 @@ import (
 func (s *ServiceImpl) GetAccountMain(c echo.Context, userId string) (*domain.GetAccountMainResponse, error) {
 	intUserId, err := strconv.Atoi(userId)
 	if err != nil {
+		log.Errorf("error req get account main: %s", err)
 		return &domain.GetAccountMainResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.INVALID_REQUEST_CODE),
@@ -21,6 +23,7 @@ func (s *ServiceImpl) GetAccountMain(c echo.Context, userId string) (*domain.Get
 	}
 	accountDetailMain, err := s.repository.GetAccountDetailsMainByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get account detail main by user id: %s" ,err)
 		return &domain.GetAccountMainResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.ACCOUNT_NOT_FOUND_CODE),
@@ -30,6 +33,7 @@ func (s *ServiceImpl) GetAccountMain(c echo.Context, userId string) (*domain.Get
 	}
 	accountMain, err := s.repository.GetAccountsByAccountId(accountDetailMain.ID)
 	if err != nil {
+		log.Errorf("error repo get account by account id: %s" ,err)
 		return &domain.GetAccountMainResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.ACCOUNT_NOT_FOUND_CODE),
@@ -39,6 +43,7 @@ func (s *ServiceImpl) GetAccountMain(c echo.Context, userId string) (*domain.Get
 	}
 	accountBalancesMain, err := s.repository.GetAccountBalancesByAccountId(accountDetailMain.ID)
 	if err != nil {
+		log.Errorf("error repo get account balances by account id: %s" ,err)
 		return &domain.GetAccountMainResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.ACCOUNT_NOT_FOUND_CODE),

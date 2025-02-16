@@ -18,9 +18,9 @@ type Repository interface {
 
 	// Debit Cards
 	GetDebitCardsListByUserId(userId int) ([]*ent.DebitCards, error)
-	GetDebitCardDesignListByUserId(debitCardId int) ([]*ent.DebitCardDesign, error)
-	GetDebitCardDetailListByUserId(debitCardId int) ([]*ent.DebitCardDetails, error)
-	GetDebitCardStatusListByUserId(debitCardId int) ([]*ent.DebitCardStatus, error)
+	GetDebitCardDesignListByUserId(userId int) ([]*ent.DebitCardDesign, error)
+	GetDebitCardDetailListByUserId(userId int) ([]*ent.DebitCardDetails, error)
+	GetDebitCardStatusListByUserId(userId int) ([]*ent.DebitCardStatus, error)
 
 	// Transaction
 	GetTransaction(userId int) ([]*ent.Transactions, error)

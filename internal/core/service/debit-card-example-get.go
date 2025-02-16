@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
 	"github.com/mnsv1511/kasikorn-line-assignment/constant"
 	"github.com/mnsv1511/kasikorn-line-assignment/internal/core/service/domain"
 )
@@ -13,6 +14,7 @@ import (
 func (s *ServiceImpl) GetDebitCardExample(c echo.Context, userId string) (*domain.GetDebitCardExampleResponse, error) {
 	intUserId, err := strconv.Atoi(userId)
 	if err != nil {
+		log.Errorf("error req get debit card example: %s" ,err)
 		return &domain.GetDebitCardExampleResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.INVALID_REQUEST_CODE),
@@ -23,6 +25,7 @@ func (s *ServiceImpl) GetDebitCardExample(c echo.Context, userId string) (*domai
 
 	debitCardListData, err := s.repository.GetDebitCardsListByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get debit card list by user id: %s" ,err)
 		return &domain.GetDebitCardExampleResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.DEBIT_CARD_NOT_FOUND_CODE),
@@ -32,6 +35,7 @@ func (s *ServiceImpl) GetDebitCardExample(c echo.Context, userId string) (*domai
 	}
 	debitCardDesignListData, err := s.repository.GetDebitCardDesignListByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get debit card design list by user id: %s" ,err)
 		return &domain.GetDebitCardExampleResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.DEBIT_CARD_NOT_FOUND_CODE),
@@ -41,6 +45,7 @@ func (s *ServiceImpl) GetDebitCardExample(c echo.Context, userId string) (*domai
 	}
 	debitCardDetailListData, err := s.repository.GetDebitCardDetailListByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get debit card detail list by user id: %s" ,err)
 		return &domain.GetDebitCardExampleResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.DEBIT_CARD_NOT_FOUND_CODE),
@@ -50,6 +55,7 @@ func (s *ServiceImpl) GetDebitCardExample(c echo.Context, userId string) (*domai
 	}
 	debitCardStatusListData, err := s.repository.GetDebitCardStatusListByUserId(intUserId)
 	if err != nil {
+		log.Errorf("error repo get debit card status list by user id: %s" ,err)
 		return &domain.GetDebitCardExampleResponse{
 			Status: &domain.StatusCode{
 				Code:        string(constant.DEBIT_CARD_NOT_FOUND_CODE),
